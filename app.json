@@ -1,4 +1,7 @@
 {
   "name": "Learn_English_Demo",
-  "displayName": "Learn_English_Demo"
+  "displayName": "Learn_English_Demo",
+  "packagerOpts": {
+    "config": "metro.config.js"
+  }
 }
