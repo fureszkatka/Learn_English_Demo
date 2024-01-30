@@ -9,6 +9,10 @@
     "start": "react-native start",
     "test": "jest"
   },
+  "resolutions": {
+    "@types/react": "^17.0.38",
+    "@types/react-dom": "^17.0.11"
+  },
   "dependencies": {
     "@ant-design/icons-react-native": "^2.3.2",
     "@react-navigation/native": "^6.1.9",
@@ -40,5 +44,9 @@
   },
   "engines": {
     "node": ">=18"
-  }
+  },
+  "main": "index.js",
+  "repository": "git@github.com:fureszkatka/Learn_English_Demo.git",
+  "author": "fureszkatka <fureszkatka@gmail.com>",
+  "license": "MIT"
 }
