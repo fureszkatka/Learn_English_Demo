@@ -5,41 +5,28 @@ const styles = StyleSheet.create({
         backgroundColor: "black",
         justifyContent: "flex-start",
         alignItems: "center",
-        height:  2300,
+        height:  2200,
         width: "100%"
     },
         instructions:{
-            color: "#d0ff00",
+            color: "#0fff2f",
             fontSize: 20,
             height: 70,
             padding: 10,
             justifyContent: "flex-start",
             alignItems: "center",
         },
-        subjective_title:{
-            color: "#013621",
-            justifyContent: "center",
-            alignItems: "center",
+        objective_title:{
+            color: "#f4f7c3",
             fontSize: 22,
+            borderBottomWidth:5,
+            borderBottomColor: "#130545",
             height: 40,
-        },
-        checkAnswer:{
-            color: "#013621",
-            backgroundColor: "#d0ff00",
-            justifyContent: "center",
-            alignItems: "center",
-            margin: 5,
-            fontSize: 15,
-            padding: 10,
-            borderRadius: 15
-        },
-        check_container:{
-            flexDirection: "row",
             width: "100%",
-            justifyContent: "space-between"
+            marginBottom: 10
         },
-            subjective_container:{
-                backgroundColor: "#07b572",
+            objective_container:{
+                backgroundColor: "#c90e6c",
                 justifyContent: "flex-start",
                 width: "100%",
                 padding: 10,
@@ -58,19 +45,19 @@ const styles = StyleSheet.create({
                     margin: 5
                 },
                 number:{
-                    color: "#07b572",
-                    backgroundColor: "#013621",
+                    color: "#c90e6c",
+                    backgroundColor: "#130545",
                     borderRadius: 15,
                     justifyContent: "center",
                     alignItems: "center",
                     fontSize: 18,
                     padding: 10,
-                    marginBottom: 10,
+                    marginBottom: 5, 
                     height: 40,
                     width: "100%"
                 },
                 title_language:{
-                    color: "#013621",
+                    color: "#0b1d59",
                     marginBottom: 5,
                     height: 30,
                     fontSize: 15,
@@ -90,7 +77,7 @@ const styles = StyleSheet.create({
                         alignItems: "flex-start",
                         width: "100%",
                     },
-                    subjective_hu:{
+                    objective_hu:{
                         color: "#dcfcdc",
                         fontSize: 20,
                         height: 60,
@@ -103,20 +90,20 @@ const styles = StyleSheet.create({
                         justifyContent: "center",
                         alignItems: "center"
                     },
-                        subjective_en:{
-                            color: "#d0ff00",
+                        objective_en:{
+                            color: "#0fff2f",
                             fontSize: 20,
                             height: 30,
                         },
-                        subjective_en_input:{
+                        objective_en_input:{
                             borderBottomWidth:2,
-                            borderBottomColor: "#d0ff00",
+                            borderBottomColor: "#0fff2f",
                             flex: 1,
-                            color: "#013621",
+                            color: "#130545",
                             fontSize: 20,
                         },
-                        link_to_subjectivePronouns:{
-                            backgroundColor: "yellow",
+                        link_to_objectivePronouns:{
+                            backgroundColor: "#0fff2f",
                             borderRadius: 15,
                             padding: 10
                         },

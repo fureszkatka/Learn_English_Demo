@@ -1,0 +1,8 @@
+<Stack.Screen name="Learn English" component={MenuScreen} />
+                <Stack.Screen name="Irregular Verbs" component={IrregularVerbs} />
+                <Stack.Screen name="Personal Pronouns" component={MenupersonalPronouns} />
+                <Stack.Screen name="ObjectivePronoun" component={ObjectivePronoun} />
+                <Stack.Screen name="PossessiveAdjective" component={PossessiveAdjective} />
+                <Stack.Screen name="PossessivePronoun" component={PossessivePronoun} />
+                <Stack.Screen name="ReflexivePronoun" component={ReflexivePronoun} />
+                <Stack.Screen name="SubjectivePronoun" component={SubjectivePronoun} />
