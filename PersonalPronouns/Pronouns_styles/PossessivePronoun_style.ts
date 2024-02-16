@@ -17,13 +17,26 @@ const styles = StyleSheet.create({
             alignItems: "center",
         },
         possessive_title:{
-            color: "#f4f7c3",
+            color: "#013621",
+            justifyContent: "center",
+            alignItems: "center",
             fontSize: 22,
-            borderBottomWidth:5,
-            borderBottomColor: "#40090e",
             height: 40,
+        },
+        checkAnswer:{
+            color: "#013621",
+            backgroundColor: "#06d1ce",
+            justifyContent: "center",
+            alignItems: "center",
+            margin: 5,
+            fontSize: 15,
+            padding: 10,
+            borderRadius: 15
+        },
+        check_container:{
+            flexDirection: "row",
             width: "100%",
-            marginBottom: 10
+            justifyContent: "space-between"
         },
             possessive_container:{
                 backgroundColor: "#c22b3a",
@@ -91,7 +104,7 @@ const styles = StyleSheet.create({
                         alignItems: "center"
                     },
                         possessive_en:{
-                            color: "#06d1ce",
+                            color: "#40090e",
                             fontSize: 20,
                             height: 30,
                         },

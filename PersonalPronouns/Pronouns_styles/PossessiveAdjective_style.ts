@@ -25,6 +25,21 @@ const styles = StyleSheet.create({
             width: "100%",
             marginBottom: 10
         },
+        checkAnswer:{
+            color: "#013621",
+            backgroundColor: "#0fff2f",
+            justifyContent: "center",
+            alignItems: "center",
+            margin: 5,
+            fontSize: 15,
+            padding: 10,
+            borderRadius: 15
+        },
+        check_container:{
+            flexDirection: "row",
+            width: "100%",
+            justifyContent: "space-between"
+        },
             possessiveAdjective_container:{
                 backgroundColor: "#baab00",
                 justifyContent: "flex-start",
@@ -91,7 +106,7 @@ const styles = StyleSheet.create({
                         alignItems: "center"
                     },
                         possessiveAdjective_en:{
-                            color: "#1f8703",
+                            color: "#853601",
                             fontSize: 20,
                             height: 30,
                         },

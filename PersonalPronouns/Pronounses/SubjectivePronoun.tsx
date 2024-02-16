@@ -137,7 +137,7 @@ class SubjectivePronoun extends React.Component<SubjectiveProps, SubjectiveState
                                             :
                                             (<TextInput 
                                                 style={{
-                                                    color: "blue",
+                                                    color: "#d0ff00",
                                                     borderBottomWidth:2,
                                                     borderBottomColor: "#d0ff00",
                                                     flex: 1,
@@ -173,7 +173,7 @@ class SubjectivePronoun extends React.Component<SubjectiveProps, SubjectiveState
                                             :
                                             (<TextInput 
                                                 style={{
-                                                    color: "blue",
+                                                    color: "#d0ff00",
                                                     borderBottomWidth:2,
                                                     borderBottomColor: "#d0ff00",
                                                     flex: 1,
@@ -218,7 +218,7 @@ class SubjectivePronoun extends React.Component<SubjectiveProps, SubjectiveState
                                             :
                                             (<TextInput 
                                                 style={{
-                                                    color: "blue",
+                                                    color: "#d0ff00",
                                                     borderBottomWidth:2,
                                                     borderBottomColor: "#d0ff00",
                                                     flex: 1,
@@ -257,7 +257,7 @@ class SubjectivePronoun extends React.Component<SubjectiveProps, SubjectiveState
                                             :
                                             (<TextInput 
                                                 style={{
-                                                    color: "blue",
+                                                    color: "#d0ff00",
                                                     borderBottomWidth:2,
                                                     borderBottomColor: "#d0ff00",
                                                     flex: 1,
@@ -300,7 +300,7 @@ class SubjectivePronoun extends React.Component<SubjectiveProps, SubjectiveState
                                             :
                                             (<TextInput 
                                                 style={{
-                                                    color: "blue",
+                                                    color: "#d0ff00",
                                                     borderBottomWidth:2,
                                                     borderBottomColor: "#d0ff00",
                                                     flex: 1,
@@ -338,7 +338,7 @@ class SubjectivePronoun extends React.Component<SubjectiveProps, SubjectiveState
                                             :
                                             (<TextInput 
                                                 style={{
-                                                    color: "blue",
+                                                    color: "#d0ff00",
                                                     borderBottomWidth:2,
                                                     borderBottomColor: "#d0ff00",
                                                     flex: 1,
@@ -377,7 +377,7 @@ class SubjectivePronoun extends React.Component<SubjectiveProps, SubjectiveState
                                             :
                                             (<TextInput 
                                                 style={{
-                                                    color: "blue",
+                                                    color: "#d0ff00",
                                                     borderBottomWidth:2,
                                                     borderBottomColor: "#d0ff00",
                                                     flex: 1,
@@ -416,7 +416,7 @@ class SubjectivePronoun extends React.Component<SubjectiveProps, SubjectiveState
                                             :
                                             (<TextInput 
                                                 style={{
-                                                    color: "blue",
+                                                    color: "#d0ff00",
                                                     borderBottomWidth:2,
                                                     borderBottomColor: "#d0ff00",
                                                     flex: 1,

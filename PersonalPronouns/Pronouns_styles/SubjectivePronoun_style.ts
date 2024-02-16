@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
                         alignItems: "center"
                     },
                         subjective_en:{
-                            color: "#d0ff00",
+                            color: "#013621",
                             fontSize: 20,
                             height: 30,
                         },

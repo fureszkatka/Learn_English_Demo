@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {View, Text, ScrollView, Keyboard, TouchableWithoutFeedback, TextInput,TouchableOpacity} from 'react-native';
+import {View, Text, ScrollView, Keyboard, TouchableWithoutFeedback, TextInput, TouchableOpacity, RefreshControl} from 'react-native';
 import styles from "../Pronouns_styles/PossessiveAdjective_style" 
 import {useNavigation} from '@react-navigation/native';
 
@@ -10,42 +10,70 @@ interface PossessiveAdjectiveProps{
 }
 
 interface PossessiveAdjectiveState {
-    pronouns:{
-        my: string;
-        our: string;
-        your1: string;
-        your2: string;
-        his: string;
-        her: string;
-        its: string;
-        their: string;
-    }
+    pronouns: Array<{name: string, text: string, isRight: boolean }>,
+    refreshing: boolean;
+    checking: boolean;    
 }
 
 class PossessiveAdjective extends React.Component<PossessiveAdjectiveProps, PossessiveAdjectiveState> {
 
-    state = {
-        pronouns: {
-            my: "",
-            our: "",
-            your1: "",
-            your2: "",
-            his: "",
-            her: "",
-            its: "",
-            their: ""
-        }
+    state={
+        pronouns: [
+            {name: "i", text:"", isRight: true },
+            {name: "we", text:"", isRight: true},
+            {name: "you1", text:"", isRight: true},
+            {name: "you2", text:"", isRight: true},
+            {name: "he", text:"", isRight: true},
+            {name: "she", text:"", isRight: true},
+            {name: "it", text:"", isRight: true},
+            {name: "they", text:"", isRight: true},
+        ],
+            refreshing: false,
+            checking: false
     } as PossessiveAdjectiveState
-
 
     handleChange = (name: string, text: string): void => {
         this.setState({
-            pronouns: {
-                ...this.state.pronouns,
-                [name]: text
-            }
+            pronouns: this.state.pronouns.map((pronoun) =>
+                pronoun.name == name ? {...pronoun, text: text} : pronoun
+            )
         })
     }
+
+    onRefresh = () => {
+        this.setState({ 
+            refreshing: true, 
+        });
+        setTimeout(() => {
+        this.setState({ 
+            pronouns: [
+                {name: "my", text:"", isRight: false },
+                {name: "our", text:"", isRight: false},
+                {name: "your1", text:"", isRight: false},
+                {name: "your2", text:"", isRight: false},
+                {name: "his", text:"", isRight: false},
+                {name: "her", text:"", isRight: false},
+                {name: "its", text:"", isRight: false},
+                {name: "their", text:"", isRight: false},
+            ],
+            refreshing: false, 
+            checking: false
+        });
+        }, 1000);
+    };
+
+    checkAnswer = () => {
+        this.setState({
+            pronouns: 
+                this.state.pronouns.map((pronoun) =>({
+                    ...pronoun,
+                    isRight: pronoun.text.toLowerCase() === pronoun.name
+                }))
+                ,
+            checking: true
+        });
+    };
+
 
     navigateToScreen = (screenName: string) => {
         this.props.navigation.navigate(screenName);
@@ -54,7 +82,12 @@ class PossessiveAdjective extends React.Component<PossessiveAdjectiveProps, Poss
     render() {
         return (
             <TouchableWithoutFeedback accessible={false}  onPress={Keyboard.dismiss}>
-                <ScrollView>
+                <ScrollView 
+                    refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.refreshing}
+                        onRefresh={this.onRefresh}/>}
+                >
                     <View style={styles.container}>
                         <Text style ={styles.instructions}>
                             * fill all the sentences with the right pronouns!    
@@ -72,12 +105,33 @@ class PossessiveAdjective extends React.Component<PossessiveAdjectiveProps, Poss
                                         
                                         <Text style={styles.title_language}>english:</Text>      
                                         <View style={styles.english_container}>
-                                            <TextInput 
-                                                style={styles.possessiveAdjective_en_input} 
-                                                defaultValue={this.state.pronouns.my}
-                                                onChangeText ={text => this.handleChange("my", text)}
+                                        { this.state.checking ?
+                                            (<TextInput 
+                                                style={{
+                                                    color: this.state.pronouns[0].isRight ? "green" : "red",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#1f8703",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[0].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[0].name, text)}
                                             >
-                                            </TextInput>
+                                            </TextInput>)
+                                            :
+                                            (<TextInput 
+                                                style={{
+                                                    color: "#1f8703",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#1f8703",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[0].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[0].name, text)}
+                                            >
+                                            </TextInput>)
+                                        }
                                             <Text style={styles.possessiveAdjective_en}> live in Budapest.</Text>
                                         </View>
                                     </View>
@@ -87,12 +141,33 @@ class PossessiveAdjective extends React.Component<PossessiveAdjectiveProps, Poss
                                         
                                         <Text style={styles.title_language}>english:</Text>
                                         <View style={styles.english_container}>                                        
-                                            <TextInput 
-                                                style={styles.possessiveAdjective_en_input} 
-                                                defaultValue={this.state.pronouns.our}
-                                                onChangeText ={text => this.handleChange("our", text)}
+                                        { this.state.checking ?
+                                            (<TextInput 
+                                                style={{
+                                                    color: this.state.pronouns[1].isRight ? "green" : "red",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#1f8703",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[1].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[1].name, text)}
                                             >
-                                            </TextInput>
+                                            </TextInput>)
+                                            :
+                                            (<TextInput 
+                                                style={{
+                                                    color: "#1f8703",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#1f8703",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[1].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[1].name, text)}
+                                            >
+                                            </TextInput>)
+                                        }
                                             <Text style={styles.possessiveAdjective_en}>play.</Text>
                                         </View>
 
@@ -110,12 +185,33 @@ class PossessiveAdjective extends React.Component<PossessiveAdjectiveProps, Poss
                                             <Text style={styles.title_language}>english:</Text> 
                                             <View style={styles.english_container}>
                                                 <Text style={styles.possessiveAdjective_en}>Do </Text>
-                                                <TextInput 
-                                                    style={styles.possessiveAdjective_en_input} 
-                                                    defaultValue={this.state.pronouns.your1}
-                                                    onChangeText ={text => this.handleChange("your1", text)}
-                                                >
-                                                </TextInput>
+                                                { this.state.checking ?
+                                                    (<TextInput 
+                                                        style={{
+                                                            color: this.state.pronouns[2].isRight ? "green" : "red",
+                                                            borderBottomWidth:2,
+                                                            borderBottomColor: "#1f8703",
+                                                            flex: 1,
+                                                            fontSize: 20
+                                                        }} 
+                                                        defaultValue={this.state.pronouns[2].text}
+                                                        onChangeText ={text => this.handleChange(this.state.pronouns[2].name, text)}
+                                                    >
+                                                    </TextInput>)
+                                                    :
+                                                    (<TextInput 
+                                                        style={{
+                                                            color: "#1f8703",
+                                                            borderBottomWidth:2,
+                                                            borderBottomColor: "#1f8703",
+                                                            flex: 1,
+                                                            fontSize: 20
+                                                        }} 
+                                                        defaultValue={this.state.pronouns[2].text}
+                                                        onChangeText ={text => this.handleChange(this.state.pronouns[2].name, text)}
+                                                    >
+                                                    </TextInput>)
+                                                }
                                                 <Text style={styles.possessiveAdjective_en}> have a dog?</Text>
                                             </View>
                                     </View>
@@ -128,12 +224,33 @@ class PossessiveAdjective extends React.Component<PossessiveAdjectiveProps, Poss
                                         <Text style={styles.title_language}>english:</Text> 
                                         <View style={styles.english_container}>
                                             <Text style={styles.possessiveAdjective_en}>Where are </Text>
-                                            <TextInput 
-                                                style={styles.possessiveAdjective_en_input} 
-                                                defaultValue={this.state.pronouns.your2}
-                                                onChangeText ={text => this.handleChange("your2", text)}
+                                            { this.state.checking ?
+                                            (<TextInput 
+                                                style={{
+                                                    color: this.state.pronouns[3].isRight ? "green" : "red",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#1f8703",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[3].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[3].name, text)}
                                             >
-                                            </TextInput>
+                                            </TextInput>)
+                                            :
+                                            (<TextInput 
+                                                style={{
+                                                    color: "#1f8703",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#1f8703",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[3].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[3].name, text)}
+                                            >
+                                            </TextInput>)
+                                        }
                                             <Text style={styles.possessiveAdjective_en}>?</Text>
                                         </View>
                                     
@@ -148,12 +265,33 @@ class PossessiveAdjective extends React.Component<PossessiveAdjectiveProps, Poss
                                     
                                         <Text style={styles.title_language}>english:</Text> 
                                         <View style={styles.english_container}>
-                                            <TextInput 
-                                                style={styles.possessiveAdjective_en_input} 
-                                                defaultValue={this.state.pronouns.his}
-                                                onChangeText ={text => this.handleChange("his", text)}
+                                        { this.state.checking ?
+                                            (<TextInput 
+                                                style={{
+                                                    color: this.state.pronouns[4].isRight ? "green" : "red",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#1f8703",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[4].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[4].name, text)}
                                             >
-                                            </TextInput>
+                                            </TextInput>)
+                                            :
+                                            (<TextInput 
+                                                style={{
+                                                    color: "#1f8703",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#1f8703",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[4].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[4].name, text)}
+                                            >
+                                            </TextInput>)
+                                        }
                                             <Text style={styles.possessiveAdjective_en}> likes me.</Text>
                                         </View>
 
@@ -165,12 +303,33 @@ class PossessiveAdjective extends React.Component<PossessiveAdjectiveProps, Poss
                                         
                                         <Text style={styles.title_language}>english:</Text> 
                                         <View style={styles.english_container}>                                        
-                                            <TextInput 
-                                                style={styles.possessiveAdjective_en_input} 
-                                                defaultValue={this.state.pronouns.her}
-                                                onChangeText ={text => this.handleChange("her", text)}
+                                        { this.state.checking ?
+                                            (<TextInput 
+                                                style={{
+                                                    color: this.state.pronouns[5].isRight ? "green" : "red",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#1f8703",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[5].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[5].name, text)}
                                             >
-                                            </TextInput>
+                                            </TextInput>)
+                                            :
+                                            (<TextInput 
+                                                style={{
+                                                    color: "#1f8703",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#1f8703",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[5].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[5].name, text)}
+                                            >
+                                            </TextInput>)
+                                        }
                                             <Text style={styles.possessiveAdjective_en}> likes ice creame.</Text>
                                         </View>
 
@@ -183,12 +342,33 @@ class PossessiveAdjective extends React.Component<PossessiveAdjectiveProps, Poss
                                         <Text style={styles.title_language}>english:</Text> 
                                         
                                         <View style={styles.english_container}>                                        
-                                            <TextInput 
-                                                style={styles.possessiveAdjective_en_input} 
-                                                defaultValue={this.state.pronouns.its}
-                                                onChangeText ={text => this.handleChange("its", text)}
+                                        { this.state.checking ?
+                                            (<TextInput 
+                                                style={{
+                                                    color: this.state.pronouns[6].isRight ? "green" : "red",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#1f8703",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[6].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[6].name, text)}
                                             >
-                                            </TextInput>
+                                            </TextInput>)
+                                            :
+                                            (<TextInput 
+                                                style={{
+                                                    color: "#1f8703",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#1f8703",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[6].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[6].name, text)}
+                                            >
+                                            </TextInput>)
+                                        }
                                             <Text style={styles.possessiveAdjective_en}> likes its ball.</Text>
                                         </View>
                                     
@@ -201,12 +381,33 @@ class PossessiveAdjective extends React.Component<PossessiveAdjectiveProps, Poss
                                         <Text style={styles.title_language}>english:</Text> 
                                         <View style={styles.english_container}>                                    
                                             <Text style={styles.possessiveAdjective_en}>Tom and Jim are not find the way out, </Text> 
-                                            <TextInput 
-                                                style={styles.possessiveAdjective_en_input} 
-                                                defaultValue={this.state.pronouns.their}
-                                                onChangeText ={text => this.handleChange("their", text)}
+                                            { this.state.checking ?
+                                            (<TextInput 
+                                                style={{
+                                                    color: this.state.pronouns[7].isRight ? "green" : "red",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#1f8703",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[7].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[7].name, text)}
                                             >
-                                            </TextInput> 
+                                            </TextInput>)
+                                            :
+                                            (<TextInput 
+                                                style={{
+                                                    color: "#1f8703",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#1f8703",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[7].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[7].name, text)}
+                                            >
+                                            </TextInput>)
+                                        }
                                             <Text style={styles.possessiveAdjective_en}> are lost.</Text>
                                         </View>
 
@@ -214,7 +415,7 @@ class PossessiveAdjective extends React.Component<PossessiveAdjectiveProps, Poss
                                 </View>
                             </View>
                             <View style={styles.nav_buttons}>
-                                <TouchableOpacity style={styles.link_to_possessiveAdjectivePronouns} onPress={() => this.navigateToScreen("possessiveAdjectivePronoun")}>
+                                <TouchableOpacity style={styles.link_to_possessiveAdjectivePronouns} onPress={() => this.navigateToScreen("ObjectivePronoun")}>
                                     <Text style={{color: "black"}}>Subjective Pronouns</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.link_to_possessiveAdjectivePronouns} onPress={() => this.navigateToScreen("PossessivePronoun")}>

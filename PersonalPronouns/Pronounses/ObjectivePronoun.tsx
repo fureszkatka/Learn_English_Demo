@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {View, Text, ScrollView, Keyboard, TouchableWithoutFeedback, TextInput,TouchableOpacity} from 'react-native';
+import {View, Text, ScrollView, Keyboard, TouchableWithoutFeedback, TextInput,TouchableOpacity,RefreshControl} from 'react-native';
 import styles from "../Pronouns_styles/ObjectivePronoun_style" 
 import {useNavigation} from '@react-navigation/native';
 
@@ -9,41 +9,59 @@ interface ObjectiveProps{
         navigate: (screenName: string) => void,
     }
 }
+    
 interface ObjectiveState {
-    pronouns:{
-        me: string;
-        us: string;
-        you1: string;
-        you2: string;
-        him: string;
-        her: string;
-        it: string;
-        them: string;
-    } 
+    pronouns: Array<{name: string, text: string, isRight: boolean }>,
+    refreshing: boolean;
+    checking: boolean;
+
 }
 
-class ObjectivePronoun extends React.Component<ObjectiveProps,ObjectiveState> {
+class ObjectivePronoun extends React.Component<ObjectiveProps, ObjectiveState> {
 
     state = {
-        pronouns:{
-            me: "",
-            us: "",
-            you1: "",
-            you2: "",
-            him: "",
-            her: "",
-            it: "",
-            them: ""
-        }
+        pronouns: [
+            {name: "i", text:"", isRight: true },
+            {name: "we", text:"", isRight: true},
+            {name: "you1", text:"", isRight: true},
+            {name: "you2", text:"", isRight: true},
+            {name: "he", text:"", isRight: true},
+            {name: "she", text:"", isRight: true},
+            {name: "it", text:"", isRight: true},
+            {name: "they", text:"", isRight: true},
+        ],
+        refreshing: false,
+        checking: false
     } as ObjectiveState
 
 
+    onRefresh = () => {
+        this.setState({ 
+            refreshing: true, 
+        });
+        setTimeout(() => {
+          this.setState({ 
+            pronouns: [
+                {name: "i", text:"", isRight: false },
+                {name: "we", text:"", isRight: false},
+                {name: "you1", text:"", isRight: false},
+                {name: "you2", text:"", isRight: false},
+                {name: "he", text:"", isRight: false},
+                {name: "she", text:"", isRight: false},
+                {name: "it", text:"", isRight: false},
+                {name: "they", text:"", isRight: false},
+            ],
+            refreshing: false, 
+            checking: false
+        });
+        }, 1000);
+    };
+
     handleChange = (name: string, text: string): void => {
         this.setState({
-            pronouns: {
-                ...this.state.pronouns,
-                [name]: text
-            }
+            pronouns: this.state.pronouns.map((pronoun) =>
+                pronoun.name == name ? {...pronoun, text: text} : pronoun
+            )
         })
     }
 
@@ -51,16 +69,43 @@ class ObjectivePronoun extends React.Component<ObjectiveProps,ObjectiveState> {
         this.props.navigation.navigate(screenName);
     };
 
+    checkAnswer = () => {
+        this.setState({
+            pronouns: 
+                this.state.pronouns.map((pronoun) =>({
+                    ...pronoun,
+                    isRight: pronoun.text.toLowerCase() === pronoun.name
+                }))
+                ,
+            checking: true
+        });
+    };
+
     render() {
         return (
             <TouchableWithoutFeedback accessible={false}  onPress={Keyboard.dismiss}>
-                <ScrollView>
+                <ScrollView 
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.refreshing}
+                            onRefresh={this.onRefresh}/>}
+                >
                     <View style={styles.container}>
                         <Text style ={styles.instructions}>
                             * fill all the sentences with the right pronouns!    
                         </Text>
                         
                             <View style={styles.objective_container}>
+                                <View style={styles.check_container}>
+                                    <Text style={styles.objective_title}>Subjective Pronouns</Text>
+                                    <TouchableOpacity 
+                                        onPress={()=>this.checkAnswer()}>
+                                        <Text style={styles.checkAnswer}>
+                                            check answers
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                                
                                 <Text style={styles.objective_title}>Objective </Text>
                                 <Text style={styles.number}>1ˢᵗ Person</Text>
 
@@ -72,12 +117,33 @@ class ObjectivePronoun extends React.Component<ObjectiveProps,ObjectiveState> {
                                         
                                         <Text style={styles.title_language}>english:</Text>      
                                         <View style={styles.english_container}>
-                                            <TextInput 
-                                                style={styles.objective_en_input} 
-                                                defaultValue={this.state.pronouns.me}
-                                                onChangeText ={text => this.handleChange("me", text)}
+                                        { this.state.checking ?
+                                            (<TextInput 
+                                                style={{
+                                                    color: this.state.pronouns[0].isRight ? "green" : "red",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#0fff2f",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[0].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[0].name, text)}
                                             >
-                                            </TextInput>
+                                            </TextInput>)
+                                            :
+                                            (<TextInput 
+                                                style={{
+                                                    color: "#0fff2f",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#0fff2f",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[0].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[0].name, text)}
+                                            >
+                                            </TextInput>)
+                                        }
                                             <Text style={styles.objective_en}> live in Budapest.</Text>
                                         </View>
                                     </View>
@@ -87,12 +153,33 @@ class ObjectivePronoun extends React.Component<ObjectiveProps,ObjectiveState> {
                                         
                                         <Text style={styles.title_language}>english:</Text>
                                         <View style={styles.english_container}>                                        
-                                            <TextInput 
-                                                style={styles.objective_en_input} 
-                                                defaultValue={this.state.pronouns.us}
-                                                onChangeText ={text => this.handleChange("us", text)}
+                                        { this.state.checking ?
+                                            (<TextInput 
+                                                style={{
+                                                    color: this.state.pronouns[1].isRight ? "green" : "red",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#0fff2f",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[1].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[1].name, text)}
                                             >
-                                            </TextInput>
+                                            </TextInput>)
+                                            :
+                                            (<TextInput 
+                                                style={{
+                                                    color: "#0fff2f",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#0fff2f",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[1].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[1].name, text)}
+                                            >
+                                            </TextInput>)
+                                        }
                                             <Text style={styles.objective_en}>play.</Text>
                                         </View>
 
@@ -110,12 +197,33 @@ class ObjectivePronoun extends React.Component<ObjectiveProps,ObjectiveState> {
                                             <Text style={styles.title_language}>english:</Text> 
                                             <View style={styles.english_container}>
                                                 <Text style={styles.objective_en}>Do </Text>
-                                                <TextInput 
-                                                    style={styles.objective_en_input} 
-                                                    defaultValue={this.state.pronouns.you1}
-                                                    onChangeText ={text => this.handleChange("you1", text)}
-                                                >
-                                                </TextInput>
+                                                { this.state.checking ?
+                                                    (<TextInput 
+                                                        style={{
+                                                            color: this.state.pronouns[2].isRight ? "green" : "red",
+                                                            borderBottomWidth:2,
+                                                            borderBottomColor: "#0fff2f",
+                                                            flex: 1,
+                                                            fontSize: 20
+                                                        }} 
+                                                        defaultValue={this.state.pronouns[2].text}
+                                                        onChangeText ={text => this.handleChange(this.state.pronouns[2].name, text)}
+                                                    >
+                                                    </TextInput>)
+                                                    :
+                                                    (<TextInput 
+                                                        style={{
+                                                            color: "#0fff2f",
+                                                            borderBottomWidth:2,
+                                                            borderBottomColor: "#0fff2f",
+                                                            flex: 1,
+                                                            fontSize: 20
+                                                        }} 
+                                                        defaultValue={this.state.pronouns[2].text}
+                                                        onChangeText ={text => this.handleChange(this.state.pronouns[2].name, text)}
+                                                    >
+                                                    </TextInput>)
+                                                }
                                                 <Text style={styles.objective_en}> have a dog?</Text>
                                             </View>
                                     </View>
@@ -128,12 +236,33 @@ class ObjectivePronoun extends React.Component<ObjectiveProps,ObjectiveState> {
                                         <Text style={styles.title_language}>english:</Text> 
                                         <View style={styles.english_container}>
                                             <Text style={styles.objective_en}>Where are </Text>
-                                            <TextInput 
-                                                style={styles.objective_en_input} 
-                                                defaultValue={this.state.pronouns.you2}
-                                                onChangeText ={text => this.handleChange("you2", text)}
-                                            >
-                                            </TextInput>
+                                            { this.state.checking ?
+                                                (<TextInput 
+                                                    style={{
+                                                        color: this.state.pronouns[3].isRight ? "green" : "red",
+                                                        borderBottomWidth:2,
+                                                        borderBottomColor: "#0fff2f",
+                                                        flex: 1,
+                                                        fontSize: 20
+                                                    }} 
+                                                    defaultValue={this.state.pronouns[3].text}
+                                                    onChangeText ={text => this.handleChange(this.state.pronouns[3].name, text)}
+                                                >
+                                                </TextInput>)
+                                                :
+                                                (<TextInput 
+                                                    style={{
+                                                        color: "#0fff2f",
+                                                        borderBottomWidth:2,
+                                                        borderBottomColor: "#0fff2f",
+                                                        flex: 1,
+                                                        fontSize: 20
+                                                    }} 
+                                                    defaultValue={this.state.pronouns[3].text}
+                                                    onChangeText ={text => this.handleChange(this.state.pronouns[3].name, text)}
+                                                >
+                                                </TextInput>)
+                                            }
                                             <Text style={styles.objective_en}>?</Text>
                                         </View>
                                     
@@ -148,12 +277,33 @@ class ObjectivePronoun extends React.Component<ObjectiveProps,ObjectiveState> {
                                     
                                         <Text style={styles.title_language}>english:</Text> 
                                         <View style={styles.english_container}>
-                                            <TextInput 
-                                                style={styles.objective_en_input} 
-                                                defaultValue={this.state.pronouns.him}
-                                                onChangeText ={text => this.handleChange("him", text)}
+                                        { this.state.checking ?
+                                            (<TextInput 
+                                                style={{
+                                                    color: this.state.pronouns[4].isRight ? "green" : "red",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#0fff2f",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[4].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[4].name, text)}
                                             >
-                                            </TextInput>
+                                            </TextInput>)
+                                            :
+                                            (<TextInput 
+                                                style={{
+                                                    color: "#0fff2f",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#0fff2f",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[4].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[4].name, text)}
+                                            >
+                                            </TextInput>)
+                                        }
                                             <Text style={styles.objective_en}> likes me.</Text>
                                         </View>
 
@@ -165,12 +315,33 @@ class ObjectivePronoun extends React.Component<ObjectiveProps,ObjectiveState> {
                                         
                                         <Text style={styles.title_language}>english:</Text> 
                                         <View style={styles.english_container}>                                        
-                                            <TextInput 
-                                                style={styles.objective_en_input} 
-                                                defaultValue={this.state.pronouns.her}
-                                                onChangeText ={text => this.handleChange("her", text)}
+                                        { this.state.checking ?
+                                            (<TextInput 
+                                                style={{
+                                                    color: this.state.pronouns[5].isRight ? "green" : "red",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#0fff2f",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[5].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[5].name, text)}
                                             >
-                                            </TextInput>
+                                            </TextInput>)
+                                            :
+                                            (<TextInput 
+                                                style={{
+                                                    color: "#0fff2f",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#0fff2f",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[5].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[5].name, text)}
+                                            >
+                                            </TextInput>)
+                                        }
                                             <Text style={styles.objective_en}> likes ice creame.</Text>
                                         </View>
 
@@ -183,12 +354,33 @@ class ObjectivePronoun extends React.Component<ObjectiveProps,ObjectiveState> {
                                         <Text style={styles.title_language}>english:</Text> 
                                         
                                         <View style={styles.english_container}>                                        
-                                            <TextInput 
-                                                style={styles.objective_en_input} 
-                                                defaultValue={this.state.pronouns.it}
-                                                onChangeText ={text => this.handleChange("it", text)}
+                                        { this.state.checking ?
+                                            (<TextInput 
+                                                style={{
+                                                    color: this.state.pronouns[6].isRight ? "green" : "red",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#0fff2f",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[6].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[6].name, text)}
                                             >
-                                            </TextInput>
+                                            </TextInput>)
+                                            :
+                                            (<TextInput 
+                                                style={{
+                                                    color: "#0fff2f",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#0fff2f",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[6].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[6].name, text)}
+                                            >
+                                            </TextInput>)
+                                        }
                                             <Text style={styles.objective_en}> likes its ball.</Text>
                                         </View>
                                     
@@ -201,12 +393,33 @@ class ObjectivePronoun extends React.Component<ObjectiveProps,ObjectiveState> {
                                         <Text style={styles.title_language}>english:</Text> 
                                         <View style={styles.english_container}>                                    
                                             <Text style={styles.objective_en}>Tom and Jim are not find the way out, </Text> 
-                                            <TextInput 
-                                                style={styles.objective_en_input} 
-                                                defaultValue={this.state.pronouns.them}
-                                                onChangeText ={text => this.handleChange("them", text)}
+                                            { this.state.checking ?
+                                            (<TextInput 
+                                                style={{
+                                                    color: this.state.pronouns[7].isRight ? "green" : "red",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#0fff2f",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[7].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[7].name, text)}
                                             >
-                                            </TextInput> 
+                                            </TextInput>)
+                                            :
+                                            (<TextInput 
+                                                style={{
+                                                    color: "#0fff2f",
+                                                    borderBottomWidth:2,
+                                                    borderBottomColor: "#0fff2f",
+                                                    flex: 1,
+                                                    fontSize: 20
+                                                }} 
+                                                defaultValue={this.state.pronouns[7].text}
+                                                onChangeText ={text => this.handleChange(this.state.pronouns[7].name, text)}
+                                            >
+                                            </TextInput>)
+                                        } 
                                             <Text style={styles.objective_en}> are lost.</Text>
                                         </View>
 

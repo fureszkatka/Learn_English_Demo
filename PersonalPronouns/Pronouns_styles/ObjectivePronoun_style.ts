@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
         backgroundColor: "black",
         justifyContent: "flex-start",
         alignItems: "center",
-        height:  2200,
+        height:  2300,
         width: "100%"
     },
         instructions:{
@@ -17,13 +17,26 @@ const styles = StyleSheet.create({
             alignItems: "center",
         },
         objective_title:{
-            color: "#f4f7c3",
+            color: "#013621",
+            justifyContent: "center",
+            alignItems: "center",
             fontSize: 22,
-            borderBottomWidth:5,
-            borderBottomColor: "#130545",
             height: 40,
+        },
+        checkAnswer:{
+            color: "#013621",
+            backgroundColor: "#0fff2f",
+            justifyContent: "center",
+            alignItems: "center",
+            margin: 5,
+            fontSize: 15,
+            padding: 10,
+            borderRadius: 15
+        },
+        check_container:{
+            flexDirection: "row",
             width: "100%",
-            marginBottom: 10
+            justifyContent: "space-between"
         },
             objective_container:{
                 backgroundColor: "#c90e6c",
@@ -91,7 +104,7 @@ const styles = StyleSheet.create({
                         alignItems: "center"
                     },
                         objective_en:{
-                            color: "#0fff2f",
+                            color: "#130545",
                             fontSize: 20,
                             height: 30,
                         },
