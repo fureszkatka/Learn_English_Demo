@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         borderBottomColor: '#540324',
     },
     showButton: {
-        backgroundColor: '#540324',
+        backgroundColor: 'green',
         padding: 10,
         borderRadius: 15,
         width: 100,

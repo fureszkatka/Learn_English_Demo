@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, ImageBackground} from 'react-native';
 import React from 'react';
 import styles from './Menu_style';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -9,8 +9,12 @@ const MenupersonalPronouns = ({navigation}: any) => {
         navigation.navigate(screenName);
     };
 
+    const image = {uri: 'https://w0.peakpx.com/wallpaper/674/994/HD-wallpaper-yellow-green.jpg'};
+
+
     return (
         <ScrollView>
+            <ImageBackground source={image} style={{flexDirection: "column",width: "100%", height: "100%"}} blurRadius={5}>
             <View style={styles.container}>
                 <TouchableOpacity style={styles.topic_container}  onPress={() => navigateToScreen('SubjectivePronoun')}>
                     <Text style={styles.SubjectivePronoun}>Subjective Pronouns (alanyi)</Text>
@@ -31,8 +35,8 @@ const MenupersonalPronouns = ({navigation}: any) => {
                 <TouchableOpacity style={styles.topic_container} onPress={() => navigateToScreen('ReflexivePronoun')}>
                     <Text style={styles.ReflexivePronoun} >Reflexive Pronouns (visszaható)</Text>
                 </TouchableOpacity>
-                
             </View>
+            </ImageBackground>
         </ScrollView>
     );
 };

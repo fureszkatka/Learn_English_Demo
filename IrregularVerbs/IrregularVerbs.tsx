@@ -13,6 +13,7 @@ import styles from './IrregularVerbs_styles';
 import verbs from './Irregular_data';
 import {IconOutline} from '@ant-design/icons-react-native';
 import {TextInput} from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 
 interface IrregularVerbsState {
     text1: string;
@@ -150,9 +151,9 @@ class IrregularVerbs extends React.Component<{}, IrregularVerbsState> {
                                     <View style={styles.currentVerb}>
                                         <Text style={{color:"#30b0ae",fontSize:30}}>{this.getCurrentVerb().Hungarian}</Text>
                                     </View>
-                                    <Pressable onPress={this.showRightAnswer}>
+                                    <TouchableOpacity onPress={this.showRightAnswer}>
                                         <Text style={styles.showButton}>Show Answers</Text>
-                                    </Pressable>
+                                    </TouchableOpacity>
                                 </>
                             )}
                         </View>
