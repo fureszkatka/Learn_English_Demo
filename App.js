@@ -8,21 +8,21 @@ import MenuScreen from './Menu';
 
 import MenupersonalPronouns from './PersonalPronouns/Menu_personalPronouns'; 
 import ObjectivePronoun from './PersonalPronouns/Pronounses/ObjectivePronoun';
-import PossessiveAdjective from "./PersonalPronouns/Pronounses/PossessiveAdjective"
-import PossessivePronoun from "./PersonalPronouns/Pronounses/PossessivePronoun"
-import SubjectivePronoun from "./PersonalPronouns/Pronounses/SubjectivePronoun"
+import PossessiveAdjective from './PersonalPronouns/Pronounses/PossessiveAdjective'
+import PossessivePronoun from './PersonalPronouns/Pronounses/PossessivePronoun'
+import SubjectivePronoun from './PersonalPronouns/Pronounses/SubjectivePronoun'
 
 import Tenses_Menu from './Tenses/Tenses_Menu';
 
 import Present_Menu from './Tenses/Present/Present_Menu';
 import PresentContinuous from './Tenses/Present/PresentContinuous';
-import PresentSimple from "./Tenses/Present/PresentSimple"
-import PresentPerfectContinuous from "./Tenses/Present/PresentPerfectContinuous"
+import PresentSimple from './Tenses/Present/PresentSimple'
+import PresentPerfectContinuous from './Tenses/Present/PresentPerfectContinuous'
 import PresentPerfectSimple from './Tenses/Present/PresentPerfectSimple';
 
 import PastSimple from './Tenses/Past/PastSimple';
 import PastContinuous from './Tenses/Past/PastContinuous';
-import PastPerfectSimple from './Tenses/Present/PresentPerfectSimple';
+import PastPerfectSimple from './Tenses/Past/PastPerfectSimple';
 import PastPerfectContinuous from './Tenses/Past/PastPerfectContinuous';
 import Past_Menu from './Tenses/Past/Past_Menu';
 
@@ -31,6 +31,10 @@ import FutureContinuous from './Tenses/Future/FutureContinuous';
 import FuturePerfectSimple from './Tenses/Future/FuturePerfectSimple';
 import FuturePerfectContinuous from './Tenses/Past/PastPerfectContinuous';
 import Future_Menu from './Tenses/Future/Future_Menu';
+
+import Superlatives from './Superlatives/Superlatives';
+
+import PasiveSentences from './PassiveSentences/PasiveSentences'
 
 const Stack = createStackNavigator();
 
@@ -83,6 +87,10 @@ export default function App() {
                 <Stack.Screen name="FutureContinuous" component={FutureContinuous} />
                 <Stack.Screen name="FuturePerfectSimple" component={FuturePerfectSimple} />
                 <Stack.Screen name="FuturePerfectContinuous" component={FuturePerfectContinuous} />
+
+                <Stack.Screen name="Superlatives" component={Superlatives} />
+
+                <Stack.Screen name="PasiveSentences" component={PasiveSentences} />
 
             </Stack.Navigator>
         </NavigationContainer>

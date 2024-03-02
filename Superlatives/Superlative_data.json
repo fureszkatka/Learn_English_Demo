@@ -1,0 +1,54 @@
+{
+    "superlatives": [
+      {
+        "adjective": "good",
+        "comparative": "better",
+        "superlative": "best"
+      },
+      {
+        "adjective": "bad",
+        "comparative": "worse",
+        "superlative": "worst"
+      },
+      {
+        "adjective": "little",
+        "comparative": "less",
+        "superlative": "least"
+      },
+      {
+        "adjective": "much",
+        "comparative": "more",
+        "superlative": "most"
+      },
+      {
+        "adjective": "far",
+        "comparative": "farther/further",
+        "superlative": "farthest/furthest"
+      },
+      {
+        "adjective": "old",
+        "comparative": "older/elder",
+        "superlative": "oldest/eldest"
+      },
+      {
+        "adjective": "late",
+        "comparative": "later",
+        "superlative": "latest"
+      },
+      {
+        "adjective": "near",
+        "comparative": "nearer",
+        "superlative": "nearest"
+      },
+      {
+        "adjective": "inner",
+        "comparative": "inner",
+        "superlative": "innermost"
+      },
+      {
+        "adjective": "outer",
+        "comparative": "outer",
+        "superlative": "outermost"
+      }
+    ]
+  }

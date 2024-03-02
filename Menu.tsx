@@ -12,13 +12,19 @@ const MenuScreen = ({navigation}: any) => {
         <ImageBackground source={image} style={{flexDirection: "column",width: "100%", height: "100%"}} blurRadius={2}>
             <View style={styles.container}>
                 <TouchableOpacity onPress={() => navigateToScreen('Irregular Verbs')}>
-                    <Text style={styles.Irregular_verb}>Irregular Verbs</Text>
+                    <Text style={styles.blue_menu}>Irregular Verbs</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigateToScreen('Personal Pronouns')}>
-                    <Text style={styles.Personal_Pronouns}>Personal Pronouns</Text>
+                    <Text style={styles.green_menu}>Personal Pronouns</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigateToScreen('TensesMenu')}>
-                    <Text style={styles.Tenses_Menu}>Tenses</Text>
+                    <Text style={styles.blue_menu}>Tenses</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigateToScreen('Superlatives')}>
+                    <Text style={styles.green_menu}>Superlatives</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigateToScreen('PasiveSentences')}>
+                    <Text style={styles.blue_menu}>PasiveSentences</Text>
                 </TouchableOpacity>
             </View>
         </ImageBackground>
@@ -32,7 +38,7 @@ export const styles = StyleSheet.create({
         borderRadius: 25,
         height: '100%'
     },
-    Irregular_verb: {
+    blue_menu: {
         backgroundColor: '#30b0ae',
         fontSize: 25,
         fontWeight: 'bold',
@@ -44,7 +50,7 @@ export const styles = StyleSheet.create({
         borderRightWidth: 5,
         borderRightColor: '#0d3c57',
     },
-    Personal_Pronouns:{
+    green_menu:{
         backgroundColor: '#86bd28',
         fontSize: 25,
         fontWeight: 'bold',
@@ -56,18 +62,7 @@ export const styles = StyleSheet.create({
         borderRightWidth: 5,
         borderRightColor: '#1d5247',
     },
-    Tenses_Menu:{
-        backgroundColor: '#30b0ae',
-        fontSize: 25,
-        fontWeight: 'bold',
-        margin: 10,
-        padding: 10,
-        borderRadius: 20,
-        borderBottomWidth: 5,
-        borderBottomColor: '#0d3c57',
-        borderRightWidth: 5,
-        borderRightColor: '#0d3c57',
-    }
+
 });
 
 export default MenuScreen;
